@@ -1,0 +1,29 @@
+< !DOCTYPE html >
+    <html lang="id">
+        <head>
+            <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title><%= appName %></title>
+                    <script src="https://cdn.tailwindcss.com"></script>
+                </head>
+                <body class="bg-yellow-50 text-gray-800">
+                    <header class="bg-yellow-400 py-8 text-center shadow">
+                        <h1 class="text-3xl font-bold"><%= appName %></h1>
+                        <p class="mt-1">Sarapan khas yang bikin semangat</p>
+                    </header>
+
+                    <main class="max-w-4xl mx-auto p-6">
+                        <h2 class="text-xl font-semibold mb-4">Daftar Produk</h2>
+                        <div class="grid gap-4 sm:grid-cols-2">
+                            <% produk.forEach(item => { %>
+        <div class="bg-white rounded-xl shadow p-4">
+          <span class="text-xs bg-yellow-200 rounded-full px-2 py-1"><%= item.kategori %></span>
+          <h3 class="text-lg font-bold mt-2"><%= item.nama %></h3>
+          <p class="text-sm text-gray-600"><%= item.keunggulan %></p>
+          <p class="mt-2 font-semibold text-yellow-700"><%= formatRupiah(item.harga) %></p>
+        </div>
+      <% }) %>
+                        </div>
+                    </main>
+                </body>
+            </html>
