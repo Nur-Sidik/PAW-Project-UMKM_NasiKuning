@@ -1,0 +1,28 @@
+{
+  "name": "pertemuan-7",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+      "start": "node app.js",
+      "dev": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nur-Sidik/PAW-Project-UMKM_NasiKuning.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Nur-Sidik/PAW-Project-UMKM_NasiKuning/issues"
+  },
+  "homepage": "https://github.com/Nur-Sidik/PAW-Project-UMKM_NasiKuning#readme",
+  "dependencies": {
+    "ejs": "^7.0.2",
+    "express": "^5.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
