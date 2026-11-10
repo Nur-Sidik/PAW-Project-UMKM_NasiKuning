@@ -52,3 +52,15 @@ const formHarga = document.getElementById('formHarga');
 const formStok = document.getElementById('formStok');
 const formDeskripsi = document.getElementById('formDeskripsi');
 const formGambar = document.getElementById('formGambar');
+
+function openModalCreate() {
+  modalTitle.innerText = 'Tambah Menu Baru';
+  formId.value = '';
+  formNama.value = '';
+  formHarga.value = '';
+  formStok.value = '';
+  formDeskripsi.value = '';
+  formGambar.value = '';
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
