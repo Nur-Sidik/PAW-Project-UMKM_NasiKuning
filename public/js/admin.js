@@ -64,3 +64,15 @@ function openModalCreate() {
   modal.classList.remove('hidden');
   modal.classList.add('flex');
 }
+
+function openModalEdit(id, nama, harga, stok, deskripsi, gambar) {
+  modalTitle.innerText = 'Ubah Rincian Menu & Stok';
+  formId.value = id;
+  formNama.value = nama;
+  formHarga.value = harga;
+  formStok.value = stok;
+  formDeskripsi.value = deskripsi;
+  formGambar.value = gambar || '';
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
