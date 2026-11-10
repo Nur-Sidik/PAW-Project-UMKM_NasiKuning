@@ -30,3 +30,15 @@ async function updateStatus(id, status) {
     alert('Gagal menghubungi server');
   }
 }
+
+// Handler Tombol Ubah di Tabel Menu
+function handleEditClick(btn) {
+  const id = btn.dataset.id;
+  const nama = btn.dataset.nama;
+  const harga = parseInt(btn.dataset.harga, 10);
+  const stok = parseInt(btn.dataset.stok, 10);
+  const deskripsi = btn.dataset.deskripsi;
+  const gambar = btn.dataset.gambar;
+
+  openModalEdit(id, nama, harga, stok, deskripsi, gambar);
+}
