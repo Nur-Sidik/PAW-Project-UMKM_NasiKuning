@@ -1,5 +1,7 @@
+// Di utils/formatRupiah.js
 function formatRupiah(angka) {
-  return 'Rp ' + angka.toLocaleString('id-ID');
+  if (!angka) return 'Rp 0';
+  return 'Rp ' + Number(angka).toLocaleString('id-ID');
 }
 
-module.exports = { formatRupiah };
+module.exports = formatRupiah;
