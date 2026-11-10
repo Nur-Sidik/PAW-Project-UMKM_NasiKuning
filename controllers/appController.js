@@ -1,15 +1,16 @@
 const ProdukModel = require('../models/produkModel');
 const formatRupiah = require('../utils/formatRupiah');
+const PesananModel = require('../models/pesananModels');
 
 const appController = {
   renderHome: async (req, res) => {
     try {
       const produk = await ProdukModel.getAll();
-      res.render('index', { 
+      res.render('index', {
         appName: 'UMKM Nasi Kuning',
         title: 'UMKM Nasi Kuning',
         produk,
-        formatRupiah 
+        formatRupiah
       });
     } catch (error) {
       console.error(error);
@@ -84,7 +85,7 @@ const appController = {
     } catch (error) {
       res.status(500).json({ status: 'error', message: error.message });
     }
-  }
+  },
 };
 
 module.exports = appController;
