@@ -42,3 +42,13 @@ function handleEditClick(btn) {
 
   openModalEdit(id, nama, harga, stok, deskripsi, gambar);
 }
+
+// Modal CRUD Produk
+const modal = document.getElementById('productModal');
+const modalTitle = document.getElementById('modalTitle');
+const formId = document.getElementById('formId');
+const formNama = document.getElementById('formNama');
+const formHarga = document.getElementById('formHarga');
+const formStok = document.getElementById('formStok');
+const formDeskripsi = document.getElementById('formDeskripsi');
+const formGambar = document.getElementById('formGambar');
