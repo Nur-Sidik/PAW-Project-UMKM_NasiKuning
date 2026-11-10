@@ -86,6 +86,39 @@ const appController = {
       res.status(500).json({ status: 'error', message: error.message });
     }
   },
+
+  // Endpoint POST /api/pesanan (Checkout Transaksi)
+  createOrder: async (req, res) => {
+    try {
+      const { nama_pelanggan, nomor_wa, jadwal_pengambilan, items } = req.body;
+      const parsedItems = typeof items === 'string' ? JSON.parse(items) : items;
+
+      if (!parsedItems || parsedItems.length === 0) {
+        return res.status(400).json({ status: 'error', message: 'Item pesanan tidak boleh kosong' });
+      }
+
+      const total_bayar = parsedItems.reduce((acc, curr) => acc + (curr.harga * curr.qty), 0);
+      const bukti_transfer = req.file ? `/uploads/bukti/${req.file.filename}` : null;
+
+      const result = await PesananModel.createOrder({
+        nama_pelanggan,
+        nomor_wa,
+        jadwal_pengambilan,
+        items: parsedItems,
+        total_bayar,
+        bukti_transfer
+      });
+
+      res.status(201).json({
+        status: 'success',
+        message: 'Pesanan berhasil dibuat',
+        kode_pesanan: result.kode_pesanan
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: 'error', message: error.message });
+    }
+  },
 };
 
 module.exports = appController;
