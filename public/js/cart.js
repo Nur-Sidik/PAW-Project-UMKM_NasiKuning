@@ -87,3 +87,8 @@ function openAiAssistantModal() {
   document.getElementById('aiModal').classList.remove('hidden');
   document.getElementById('aiModal').classList.add('flex');
 }
+
+function closeAiModal() {
+  document.getElementById('aiModal').classList.remove('flex');
+  document.getElementById('aiModal').classList.add('hidden');
+}
