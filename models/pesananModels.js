@@ -33,6 +33,20 @@ const PesananModel = {
       conn.release();
     }
   },
+
+  getAllOrders: async () => {
+    const [rows] = await db.query(
+      `SELECT p.*, 
+              GROUP_CONCAT(CONCAT(pr.nama_produk, ' (', ip.jumlah, 'x)') SEPARATOR ', ') AS rincian_menu,
+              SUM(ip.jumlah) AS total_porsi
+       FROM pesanan p
+       LEFT JOIN item_pesanan ip ON p.id = ip.pesanan_id
+       LEFT JOIN produk pr ON ip.produk_id = pr.id
+       GROUP BY p.id
+       ORDER BY p.id DESC`
+    );
+    return rows;
+  },
 };
 
 module.exports = PesananModel;
