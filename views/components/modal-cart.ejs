@@ -1,0 +1,61 @@
+<div id="cartModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-white rounded-3xl w-full max-w-lg p-6 sm:p-7 shadow-2xl max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-center pb-4 border-b">
+            <h3 class="text-xl font-black text-gray-900">Rincian Reservasi Pesanan</h3>
+            <button onclick="closeCartModal()"
+                class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+        </div>
+
+        <div id="cartItemsContainer" class="py-4 space-y-3"></div>
+
+        <div class="bg-amber-50 p-4 rounded-2xl flex justify-between items-center mb-6">
+            <span class="text-xs font-bold uppercase text-amber-900">Total Pembayaran:</span>
+            <span id="cartTotalPrice" class="text-xl font-black text-amber-700">Rp 0</span>
+        </div>
+
+        <form id="orderForm" onsubmit="handleOrderSubmit(event)" enctype="multipart/form-data" class="space-y-4">
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nama Lengkap Pemesan</label>
+                <input type="text" id="custNama" required
+                    class="w-full border border-gray-300 px-3.5 py-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    placeholder="misal: Siti Fadhilah">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Nomor WhatsApp Aktif</label>
+                <input type="tel" id="custWa" required
+                    class="w-full border border-gray-300 px-3.5 py-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none"
+                    placeholder="misal: 081234567890">
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Jadwal Pengambilan Porsi</label>
+                <input type="datetime-local" id="custJadwal" required
+                    class="w-full border border-gray-300 px-3.5 py-2.5 rounded-xl text-sm focus:ring-2 focus:ring-amber-500 focus:outline-none">
+            </div>
+
+            <div class="p-4 bg-gray-50 border border-gray-200 rounded-2xl text-xs space-y-1.5">
+                <p class="font-bold text-gray-900">Tujuan Transfer Pembayaran:</p>
+                <p class="text-gray-700">&bull; BCA: <span class="font-mono font-bold">123-456-7890</span> (A.N. Dapur
+                    Nasi Kuning)</p>
+                <p class="text-gray-700">&bull; QRIS: Tersedia di kasir dapur atau scan via WhatsApp konfirmasi</p>
+            </div>
+
+            <div>
+                <label class="block text-xs font-bold text-gray-700 uppercase mb-1">Unggah Struk Bukti Transfer (Maks.
+                    2MB)</label>
+                <input type="file" id="custBukti" accept="image/png, image/jpeg, image/jpg, image/webp"
+                    class="w-full text-xs text-gray-500 file:mr-3 file:py-2 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-amber-100 file:text-amber-800 hover:file:bg-amber-200 cursor-pointer">
+                <p class="text-[11px] text-gray-400 mt-1">Format: JPG, PNG, atau WebP. Maksimal ukuran file 2 MB.</p>
+            </div>
+
+            <div class="pt-4 flex gap-3">
+                <button type="button" onclick="closeCartModal()"
+                    class="w-1/3 py-2.5 border border-gray-300 rounded-xl text-sm font-semibold text-gray-600 hover:bg-gray-50">Batal</button>
+                <button type="submit"
+                    class="w-2/3 py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-sm font-bold shadow-md">Kirim
+                    Pesanan Sekarang</button>
+            </div>
+        </form>
+    </div>
+</div>
