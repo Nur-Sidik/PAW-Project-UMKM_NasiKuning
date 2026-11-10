@@ -76,3 +76,8 @@ function openModalEdit(id, nama, harga, stok, deskripsi, gambar) {
   modal.classList.remove('hidden');
   modal.classList.add('flex');
 }
+
+function closeModal() {
+  modal.classList.remove('flex');
+  modal.classList.add('hidden');
+}
