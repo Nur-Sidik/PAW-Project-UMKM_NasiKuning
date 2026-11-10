@@ -26,7 +26,10 @@ const aiController = {
         status: 'success',
         reply: response.text
       });
-    } 
+    } catch (error) {
+      console.error('AI Error:', error);
+      res.status(500).json({ status: 'error', message: error.message });
+    }
   }
 };
 
