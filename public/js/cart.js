@@ -92,3 +92,52 @@ function closeAiModal() {
   document.getElementById('aiModal').classList.remove('flex');
   document.getElementById('aiModal').classList.add('hidden');
 }
+
+// Kirim Form Reservasi & File Bukti Transfer ke Backend
+async function handleOrderSubmit(e) {
+  e.preventDefault();
+
+  if (cart.length === 0) {
+    alert('Keranjang belanja kosong!');
+    return;
+  }
+
+  const fileInput = document.getElementById('custBukti');
+  if (fileInput.files.length === 0) {
+    alert('Wajib mengunggah bukti transfer pembayaran!');
+    return;
+  }
+
+  const file = fileInput.files[0];
+  if (file.size > 2 * 1024 * 1024) {
+    alert('Ukuran berkas melebihi 2MB! Silakan kompres gambar struk Anda.');
+    return;
+  }
+
+  const formData = new FormData();
+  formData.append('nama_pelanggan', document.getElementById('custNama').value);
+  formData.append('nomor_wa', document.getElementById('custWa').value);
+  formData.append('jadwal_pengambilan', document.getElementById('custJadwal').value);
+  formData.append('items', JSON.stringify(cart));
+  formData.append('bukti_transfer', file);
+
+  try {
+    const res = await fetch('/api/pesanan', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await res.json();
+    if (res.ok) {
+      alert(`Pesanan Berhasil Disimpan!\nKode Booking: ${result.kode_pesanan}\nStatus: Menunggu Verifikasi Dapur.`);
+      cart = [];
+      updateCartUI();
+      closeCartModal();
+      window.location.reload();
+    } else {
+      alert('Gagal membuat pesanan: ' + (result.message || 'Terjadi kesalahan sistem'));
+    }
+  } catch (err) {
+    alert('Gagal menghubungi server aplikasi.');
+  }
+}
