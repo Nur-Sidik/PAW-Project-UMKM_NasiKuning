@@ -119,6 +119,33 @@ const appController = {
       res.status(500).json({ status: 'error', message: error.message });
     }
   },
+
+  // Render Dashboard Admin (Pesanan + Kelola Menu)
+  renderAdmin: async (req, res) => {
+    try {
+      const produk = await ProdukModel.getAll();
+      const pesanan = await PesananModel.getAllOrders();
+
+      // Hitung ringkasan statistik
+      const totalOmset = pesanan
+        .filter(p => p.status === 'Diproses' || p.status === 'Selesai')
+        .reduce((acc, curr) => acc + curr.total_bayar, 0);
+
+      const pesananMasuk = pesanan.filter(p => p.status === 'Menunggu Verifikasi').length;
+
+      res.render('admin', {
+        appName: 'UMKM Nasi Kuning',
+        produk,
+        pesanan,
+        totalOmset,
+        pesananMasuk,
+        formatRupiah
+      });
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Terjadi kesalahan pada server dashboard admin');
+    }
+  },
 };
 
 module.exports = appController;
