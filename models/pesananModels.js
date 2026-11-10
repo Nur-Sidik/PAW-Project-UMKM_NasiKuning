@@ -47,6 +47,39 @@ const PesananModel = {
     );
     return rows;
   },
+
+  // Update Status + Auto-potong stok jika status disetujui jadi 'Diproses'
+  updateStatus: async (id, status) => {
+    const conn = await db.getConnection();
+    try {
+      await conn.beginTransaction();
+
+      // Ambil status saat ini
+      const [current] = await conn.query('SELECT status FROM pesanan WHERE id = ?', [id]);
+      if (current.length === 0) throw new Error('Pesanan tidak ditemukan');
+      const prevStatus = current[0].status;
+
+      // Jika dari Menunggu Verifikasi -> Diproses, potong stok produk
+      if (prevStatus === 'Menunggu Verifikasi' && status === 'Diproses') {
+        const [items] = await conn.query('SELECT produk_id, jumlah FROM item_pesanan WHERE pesanan_id = ?', [id]);
+        for (const item of items) {
+          await conn.query(
+            'UPDATE produk SET stok = GREATEST(stok - ?, 0) WHERE id = ?',
+            [item.jumlah, item.produk_id]
+          );
+        }
+      }
+
+      await conn.query('UPDATE pesanan SET status = ? WHERE id = ?', [status, id]);
+      await conn.commit();
+      return true;
+    } catch (error) {
+      await conn.rollback();
+      throw error;
+    } finally {
+      conn.release();
+    }
+  }
 };
 
 module.exports = PesananModel;
