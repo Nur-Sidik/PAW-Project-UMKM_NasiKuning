@@ -146,6 +146,20 @@ const appController = {
       res.status(500).send('Terjadi kesalahan pada server dashboard admin');
     }
   },
+
+  // Endpoint PUT /api/pesanan/:id/status
+  updateOrderStatus: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { status } = req.body;
+
+      await PesananModel.updateStatus(id, status);
+      res.json({ status: 'success', message: `Status pesanan berhasil diubah menjadi ${status}` });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ status: 'error', message: error.message });
+    }
+  },
 };
 
 module.exports = appController;
