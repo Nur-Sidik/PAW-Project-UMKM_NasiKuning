@@ -67,3 +67,13 @@ function openCartModal() {
   document.getElementById('cartModal').classList.remove('hidden');
   document.getElementById('cartModal').classList.add('flex');
 }
+
+function removeFromCart(index) {
+  cart.splice(index, 1);
+  updateCartUI();
+  if (cart.length === 0) {
+    closeCartModal();
+  } else {
+    openCartModal();
+  }
+}
