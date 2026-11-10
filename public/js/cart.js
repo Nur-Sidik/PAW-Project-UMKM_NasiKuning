@@ -82,3 +82,8 @@ function closeCartModal() {
   document.getElementById('cartModal').classList.remove('flex');
   document.getElementById('cartModal').classList.add('hidden');
 }
+
+function openAiAssistantModal() {
+  document.getElementById('aiModal').classList.remove('hidden');
+  document.getElementById('aiModal').classList.add('flex');
+}
