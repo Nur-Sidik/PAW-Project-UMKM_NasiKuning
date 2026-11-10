@@ -21,6 +21,11 @@ const aiController = {
           systemInstruction: 'Kamu adalah asisten katering dan sarapan UMKM Nasi Kuning. Bantu pelanggan memilih varian menu, menghitung estimasi porsi tasyakuran/syukuran, dan berikan jawaban yang ramah dan solutif.'
         }
       });
+
+      res.json({
+        status: 'success',
+        reply: response.text
+      });
     } 
   }
 };
