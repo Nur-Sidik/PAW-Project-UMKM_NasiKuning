@@ -77,3 +77,8 @@ function removeFromCart(index) {
     openCartModal();
   }
 }
+
+function closeCartModal() {
+  document.getElementById('cartModal').classList.remove('flex');
+  document.getElementById('cartModal').classList.add('hidden');
+}
