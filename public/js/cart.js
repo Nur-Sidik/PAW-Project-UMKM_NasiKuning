@@ -24,3 +24,14 @@ function addToCart(id, nama, harga, stokMaks) {
   updateCartUI();
   alert(`[${nama}] berhasil ditambahkan ke keranjang.`);
 }
+
+function updateCartUI() {
+  const badge = document.getElementById('cartCountBadge');
+  const totalQty = cart.reduce((acc, curr) => acc + curr.qty, 0);
+  if (totalQty > 0) {
+    badge.innerText = totalQty;
+    badge.classList.remove('hidden');
+  } else {
+    badge.classList.add('hidden');
+  }
+}
