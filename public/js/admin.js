@@ -113,3 +113,18 @@ async function handleFormSubmit(e) {
     alert('Gagal menghubungi server');
   }
 }
+
+async function deleteProduct(id) {
+  if (!confirm('Hapus menu ini dari database?')) return;
+
+  try {
+    const res = await fetch(`/api/produk/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+      window.location.reload();
+    } else {
+      alert('Gagal menghapus produk');
+    }
+  } catch (err) {
+    alert('Gagal menghubungi server');
+  }
+}
