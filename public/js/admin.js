@@ -81,3 +81,35 @@ function closeModal() {
   modal.classList.remove('flex');
   modal.classList.add('hidden');
 }
+
+async function handleFormSubmit(e) {
+  e.preventDefault();
+  const id = formId.value;
+  const data = {
+    nama_produk: formNama.value,
+    harga: parseInt(formHarga.value, 10),
+    stok: parseInt(formStok.value, 10),
+    deskripsi: formDeskripsi.value,
+    gambar_url: formGambar.value || null
+  };
+
+  const url = id ? `/api/produk/${id}` : '/api/produk';
+  const method = id ? 'PUT' : 'POST';
+
+  try {
+    const res = await fetch(url, {
+      method,
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+
+    if (res.ok) {
+      window.location.reload();
+    } else {
+      const err = await res.json();
+      alert('Gagal: ' + (err.message || 'Terjadi kesalahan'));
+    }
+  } catch (err) {
+    alert('Gagal menghubungi server');
+  }
+}
