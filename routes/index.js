@@ -1,26 +1,30 @@
 const express = require('express');
 const router = express.Router();
 const appController = require('../controllers/appController');
+const authController = require('../controllers/authController');
 const upload = require('../middlewares/uploads');
-const aiController = require('../controllers/aiController');
+const { verifyAdminPage, verifyAdminAPI } = require('../middlewares/authMiddleware');
 
-// Endpoint AI Chat Assistant
-router.post('/api/ai/chat', aiController.chatAssistant);
+// Auth Routes
+router.get('/login', authController.renderLogin);
+router.post('/login', authController.loginProcess);
+router.get('/register', authController.renderRegister);
+router.post('/register', authController.registerProcess);
+router.get('/logout', authController.logout);
 
-// Halaman Frontend EJS
+// Publik
 router.get('/', appController.renderHome);
-router.get('/admin', appController.renderAdmin);
 
-
-// REST API Endpoints (Sesuai Ketentuan Tugas Topic 8)
+// Diproteksi JWT (Halaman & API Admin)
+router.get('/admin', verifyAdminPage, appController.renderAdmin);
 router.get('/api/status', appController.getStatus);
 router.get('/api/produk', appController.getProdukAPI);
 router.get('/api/produk/:id', appController.getProdukDetailAPI);
-router.post('/api/produk', appController.createProdukAPI);
-router.put('/api/produk/:id', appController.updateProdukAPI);
-router.delete('/api/produk/:id', appController.deleteProdukAPI);
-
 router.post('/api/pesanan', upload.single('bukti_transfer'), appController.createOrder);
-router.put('/api/pesanan/:id/status', appController.updateOrderStatus);
+
+router.post('/api/produk', verifyAdminAPI, appController.createProdukAPI);
+router.put('/api/produk/:id', verifyAdminAPI, appController.updateProdukAPI);
+router.delete('/api/produk/:id', verifyAdminAPI, appController.deleteProdukAPI);
+router.put('/api/pesanan/:id/status', verifyAdminAPI, appController.updateOrderStatus);
 
 module.exports = router;
