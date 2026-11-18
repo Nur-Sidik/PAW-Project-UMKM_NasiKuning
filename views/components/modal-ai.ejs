@@ -1,32 +1,58 @@
-<div class="fixed bottom-6 right-6 z-40">
-    <button onclick="openAiAssistantModal()"
-        class="bg-gradient-to-r from-amber-600 to-indigo-600 hover:from-amber-700 hover:to-indigo-700 text-white font-bold px-4 py-3 rounded-full shadow-lg flex items-center gap-2.5 transition transform hover:scale-105">
-        <span class="text-lg">✨</span>
-        <span class="text-xs sm:text-sm">Konsultasi Menu AI (Gemini)</span>
-    </button>
+<!-- Floating Trigger Button (Muncul saat modal ditutup/minimize) -->
+<div id="aiFloatBtnContainer" class="fixed bottom-6 right-6 z-40">
+  <button onclick="toggleAiModal()" class="bg-gradient-to-r from-amber-600 to-indigo-600 hover:from-amber-700 hover:to-indigo-700 text-white font-bold px-4 py-3 rounded-full shadow-lg flex items-center gap-2.5 transition transform hover:scale-105">
+    <span class="text-lg">✨</span>
+    <span class="text-xs sm:text-sm">Asisten Menu AI</span>
+  </button>
 </div>
 
-<div id="aiModal" class="fixed inset-0 bg-black/60 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
-    <div class="bg-white rounded-3xl w-full max-w-md p-6 shadow-2xl">
-        <div class="flex justify-between items-center pb-3 border-b">
-            <h3 class="text-lg font-black text-gray-900 flex items-center gap-2">
-                <span>✨</span> Konsultasi Porsi & Menu AI
-            </h3>
-            <button onclick="closeAiModal()"
-                class="text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+<!-- Modal Chat AI (Default Tersembunyi) -->
+<div id="aiModal" class="fixed bottom-6 right-6 z-50 hidden max-w-sm sm:max-w-md w-full shadow-2xl transition-all duration-300">
+  <div class="bg-white rounded-3xl w-full border border-amber-200 shadow-2xl flex flex-col h-[480px] overflow-hidden">
+    
+    <!-- Header Modal dengan Tombol Minimize & Close -->
+    <div class="flex justify-between items-center px-5 py-3.5 bg-gradient-to-r from-amber-500 to-amber-600 text-white">
+      <div class="flex items-center gap-2">
+        <span class="text-lg">✨</span>
+        <div>
+          <h3 class="text-xs sm:text-sm font-black tracking-wide">Asisten UMKM Nasi Kuning</h3>
+          <p class="text-[10px] text-amber-100">Powered by Google Gemini</p>
         </div>
-        <div class="py-4 text-xs text-gray-600 leading-relaxed">
-            <p>Wadah integrasi <strong>Google Gemini API</strong> Asisten AI siap membantu pemilihan menu dan simulasi
-                kebutuhan porsi.</p>
-        </div>
-        <div class="space-y-3">
-            <textarea id="aiPromptInput" rows="3"
-                class="w-full border border-gray-300 rounded-xl p-3 text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none"
-                placeholder="Contoh: 'Saya ada acara tasyakuran 25 orang budget 400 ribu, rekomendasikan menu yang pas!'"></textarea>
-            <button onclick="alert('GEMINI_API_KEY di .env on progress.')"
-                class="w-full bg-gradient-to-r from-indigo-600 to-amber-600 text-white py-2.5 rounded-xl text-xs font-bold shadow">
-                Tanyakan ke Gemini AI
-            </button>
-        </div>
+      </div>
+      <div class="flex items-center gap-1.5">
+        <!-- Tombol Minimize -->
+        <button onclick="toggleAiModal()" class="text-white/80 hover:text-white px-2 py-1 text-sm font-bold rounded-lg hover:bg-white/10 transition" title="Minimize Chat">
+          &minus;
+        </button>
+        <!-- Tombol Tutup / Clear -->
+        <button onclick="clearChatHistory()" class="text-white/80 hover:text-white px-2 py-1 text-xs font-bold rounded-lg hover:bg-white/10 transition" title="Hapus Riwayat">
+          &#x21bb;
+        </button>
+      </div>
     </div>
+
+    <!-- Area Riwayat Percakapan -->
+    <div id="chatMessages" class="p-4 flex-1 overflow-y-auto space-y-3 bg-amber-50/30 text-xs">
+      <!-- Pesan awal default akan di-load lewat JS / localStorage -->
+    </div>
+
+    <!-- Form Input Pesan -->
+    <form id="aiChatForm" onsubmit="handleAiChatSubmit(event)" class="p-3 bg-white border-t border-gray-100 flex items-center gap-2">
+      <input 
+        type="text" 
+        id="aiPromptInput" 
+        maxlength="500"
+        required
+        class="flex-1 border border-gray-300 rounded-xl px-3.5 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 focus:outline-none" 
+        placeholder="Tanya menu, stok, atau paket..."
+      >
+      <button 
+        type="submit" 
+        id="aiSendBtn"
+        class="bg-amber-600 hover:bg-amber-700 disabled:bg-gray-300 text-white px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-sm">
+        Kirim
+      </button>
+    </form>
+
+  </div>
 </div>
