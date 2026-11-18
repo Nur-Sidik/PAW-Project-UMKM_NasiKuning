@@ -124,26 +124,24 @@ const appController = {
   renderAdmin: async (req, res) => {
     try {
       const produk = await ProdukModel.getAll();
-      const pesanan = await PesananModel.getAllOrders();
-
-      // Hitung ringkasan statistik
-      const totalOmset = pesanan
-        .filter(p => p.status === 'Diproses' || p.status === 'Selesai')
-        .reduce((acc, curr) => acc + curr.total_bayar, 0);
+      const pesanan = await PesananModel.getAll();
 
       const pesananMasuk = pesanan.filter(p => p.status === 'Menunggu Verifikasi').length;
+      const totalOmset = pesanan
+        .filter(p => p.status === 'Diproses' || p.status === 'Selesai')
+        .reduce((sum, p) => sum + Number(p.total_bayar), 0);
 
       res.render('admin', {
-        appName: 'UMKM Nasi Kuning',
+        appName: process.env.APP_NAME || 'UMKM Nasi Kuning',
+        admin: req.admin || null, // <-- Tambahkan baris ini agar nama admin muncul di header
         produk,
         pesanan,
-        totalOmset,
         pesananMasuk,
+        totalOmset,
         formatRupiah
       });
     } catch (error) {
-      console.error(error);
-      res.status(500).send('Terjadi kesalahan pada server dashboard admin');
+      res.status(500).send('Terjadi kesalahan saat memuat halaman admin: ' + error.message);
     }
   },
 
