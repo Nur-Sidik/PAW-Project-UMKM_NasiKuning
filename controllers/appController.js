@@ -133,7 +133,7 @@ const appController = {
 
       res.render('admin', {
         appName: process.env.APP_NAME || 'UMKM Nasi Kuning',
-        admin: req.admin || null, // <-- Tambahkan baris ini agar nama admin muncul di header
+        admin: req.admin || null,
         produk,
         pesanan,
         pesananMasuk,
